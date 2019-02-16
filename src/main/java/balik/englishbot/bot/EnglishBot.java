@@ -2,14 +2,20 @@ package balik.englishbot.bot;
 
 import balik.englishbot.database.User;
 import balik.englishbot.database.UserDAO;
+import balik.englishbot.dict.Dictionary;
 import org.apache.log4j.Logger;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardButton;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 public class EnglishBot extends TelegramLongPollingBot {
@@ -21,10 +27,10 @@ public class EnglishBot extends TelegramLongPollingBot {
      * COMMANDS
      **/
     private static final String START = "/start";
-    public static final String START_GAME = "START GAME";
-    public static final String FINISH_GAME = "FINISH GAME";
-    public static final String SELECT_UNIT = "SELECT UNIT";
-    public static final String LIST = "WORD LIST";
+    private static final String HELP = "HELP";
+    private static final String START_GAME = "START GAME";
+    private static final String FINISH_GAME = "FINISH GAME";
+    private static final String LIST = "WORD LIST";
 
 
     private static final Logger LOG = Logger.getLogger(EnglishBot.class);
@@ -55,17 +61,21 @@ public class EnglishBot extends TelegramLongPollingBot {
             userRepo.createUser(user);
         }
 
-        SendMessage message = new SendMessage()
-                .setChatId(update.getMessage().getChatId())
-                .setParseMode("HTML");
-
-        processUpdate(update, message, user);
+        processUpdate(update, user);
 
         userRepo.updateUser(user);
     }
 
-    private void processUpdate(Update update, SendMessage message, User user) {
+    private void processUpdate(Update update, User user) {
+        SendMessage message = new SendMessage()
+                .setText("I don't understand you:(")
+                .setChatId(update.getMessage().getChatId())
+                .setParseMode("HTML");
+
         final String request = update.getMessage().getText();
+
+        List<KeyboardRow> keyboard = new ArrayList<>();
+        KeyboardRow keyboardRow;
 
         switch (request) {
             case START:
@@ -74,21 +84,83 @@ public class EnglishBot extends TelegramLongPollingBot {
                 } else {
                     message.setText(String.format(Messages.START.getMessage(), user.getName()));
                 }
+
                 user.setUnit(0);
                 user.setCurrentQuestion(0);
                 user.setScore(0);
-                executeMessage(message);
+
+                keyboardRow = new KeyboardRow();
+                keyboardRow.add(new KeyboardButton(START_GAME));
+                keyboard.add(keyboardRow);
+
+                keyboardRow = new KeyboardRow();
+                keyboardRow.add(new KeyboardButton(LIST));
+                keyboard.add(keyboardRow);
+
                 break;
-            case SELECT_UNIT:
+            case HELP:
+                //todo: help logic
                 break;
             case START_GAME:
+                if (user.getCurrentQuestion() != 0) {
+                    break;
+                }
+
+                user.setCurrentQuestion(user.getCurrentQuestion() + 1);
+
+                message.setText(String.format(Messages.TASK.getMessage(),
+                        Dictionary.getInstance().getKeyByIndex(user.getCurrentQuestion())));
+
+                keyboardRow = new KeyboardRow();
+                keyboardRow.add(new KeyboardButton(FINISH_GAME));
+                keyboard.add(keyboardRow);
+
                 break;
             case FINISH_GAME:
+                if (user.getCurrentQuestion() == 0) {
+                    break;
+                }
+                //todo: finish game logic
+
                 break;
             case LIST:
+                if (user.getCurrentQuestion() != 0) {
+                    break;
+                }
+
+                message.setText(Dictionary.getInstance().getDictionaryAsString());
+
+                keyboardRow = new KeyboardRow();
+                keyboardRow.add(new KeyboardButton(START_GAME));
+                keyboard.add(keyboardRow);
+
                 break;
             default:
+                if (user.getCurrentQuestion() != 0) {
+                    Dictionary dictionary = Dictionary.getInstance();
+                    String answer = dictionary.getAnwer(dictionary.getKeyByIndex(user.getCurrentQuestion()));
+                    if (answer.equals(request)) {
+                        message.setText(Messages.CORRECT.getMessage());
+                        user.setScore(user.getScore() + 1);
+                    } else {
+                        message.setText(String.format(Messages.WRONG.getMessage(), answer));
+                    }
+                    user.setCurrentQuestion(user.getCurrentQuestion() + 1);
+
+                    //TODO: next TURN logic
+                }
         }
+
+        //KEYBOARD ADDING
+        ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
+        message.setReplyMarkup(replyKeyboardMarkup);
+        replyKeyboardMarkup.setSelective(true);
+        replyKeyboardMarkup.setResizeKeyboard(true);
+        replyKeyboardMarkup.setOneTimeKeyboard(false);
+
+        replyKeyboardMarkup.setKeyboard(keyboard);
+
+        executeMessage(message);
     }
 
     private void executeMessage(SendMessage message) {

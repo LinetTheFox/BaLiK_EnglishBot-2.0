@@ -4,7 +4,11 @@ public enum Messages {
     START("Hello, <b>%s!</b>\n" +
             "This bot is aimed at helping to memorize words for dictation-translation.\n" +
             "Do not judge strictly,it is on crutches and I am a monkey coder;)\n" +
-            "I hope I'll help you.");
+            "I hope I'll help you."),
+    UNITE_CHOOSE("Choose the desired unit from the available"),
+    TASK("<b>Translate</b>:\n%s"),
+    CORRECT("Correct!\n"),
+    WRONG(" Wrong!\nCorrect answer is <b>'%s'</b>\n");
 
     private final String message;
 
