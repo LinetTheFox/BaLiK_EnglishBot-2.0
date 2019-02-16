@@ -1,5 +1,6 @@
 package balik.englishbot.bot;
 
+import balik.englishbot.database.User;
 import balik.englishbot.database.UserDAO;
 import org.apache.log4j.Logger;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
@@ -31,17 +32,30 @@ public class EnglishBot extends TelegramLongPollingBot {
 
     @Override
     public void onUpdateReceived(Update update) {
-        // We check if the update has a message and the message has text
-        if (update.hasMessage() && update.getMessage().hasText()) {
-            SendMessage message = new SendMessage() // Create a SendMessage object with mandatory fields
-                    .setChatId(update.getMessage().getChatId())
-                    .setText(update.getMessage().getText());
-            try {
-                execute(message); // Call method to send the message
-            } catch (TelegramApiException e) {
-                e.printStackTrace();
-            }
+        if (!(update.hasMessage() && update.getMessage().hasText())) {
+            return;
         }
+
+        User user = userRepo.getUser(update.getMessage().getChatId());
+
+        if (user == null) {
+            user = new User(update.getMessage().getChatId());
+            user.setUsername(update.getMessage().getFrom().getUserName());
+            user.setName(update.getMessage().getFrom().getFirstName());
+            LOG.info("Adding new user with chatId: " + user.getChatId());
+            userRepo.createUser(user);
+        }
+
+        SendMessage message = new SendMessage() // Create a SendMessage object with mandatory fields
+                .setChatId(update.getMessage().getChatId())
+                .setText(update.getMessage().getText() + " ," + user.getName());
+        try {
+            execute(message); // Call method to send the message
+        } catch (TelegramApiException e) {
+            e.printStackTrace();
+        }
+
+
     }
 
     @Override

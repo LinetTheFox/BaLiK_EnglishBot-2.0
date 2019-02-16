@@ -21,8 +21,8 @@ public class UserDAO {
      **/
     private static final String CREATE_TABLE = "CREATE TABLE IF NOT EXISTS users (" +
             "id BIGINT NOT NULL, " +
-            "username VARCHAR(20) NOT NULL, " +
-            "firstname VARCHAR(20) NOT NULL, " +
+            "username VARCHAR(20), " +
+            "firstname VARCHAR(20), " +
             "unit INT, " +
             "current_question INT, " +
             "score INT, " +
@@ -98,7 +98,7 @@ public class UserDAO {
                 return extractUser(rs);
 
         } catch (SQLException e) {
-            LOG.error("Can not get User" + e.getMessage());
+            LOG.error("Can not get User\n" + e.getMessage());
         }
 
         return null;
@@ -119,7 +119,7 @@ public class UserDAO {
                 users.add(extractUser(rs));
 
         } catch (SQLException e) {
-            LOG.error("Can not get User" + e.getMessage());
+            LOG.error("Can not get User\n" + e.getMessage());
         }
 
         return users;
@@ -152,10 +152,10 @@ public class UserDAO {
             statement.setString(k, String.valueOf(user.getChatId()));
 
             int rs = statement.executeUpdate();
-            LOG.debug("User update result: " + rs);
+            LOG.info("User update result: " + rs);
 
         } catch (SQLException e) {
-            LOG.error("Can not get User", e);
+            LOG.error("Can not get User\n" + e.getMessage());
         }
     }
 
@@ -186,7 +186,7 @@ public class UserDAO {
             setUserData(k, user, statement);
 
             int rs = statement.executeUpdate();
-            LOG.debug("User create result: " + rs);
+            LOG.info("User create result: " + rs);
 
         } catch (SQLException e) {
             LOG.error("Can not create User\n" + e.getMessage());
