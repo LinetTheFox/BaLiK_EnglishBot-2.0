@@ -1,5 +1,6 @@
 package balik.englishbot.bot;
 
+import balik.englishbot.database.UserDAO;
 import org.apache.log4j.Logger;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -13,6 +14,8 @@ import java.util.Properties;
 public class EnglishBot extends TelegramLongPollingBot {
     private final String BOT_USERNAME;
     private final String BOT_TOKEN;
+    private final UserDAO userRepo;
+
 
     private static final Logger LOG = Logger.getLogger(EnglishBot.class);
 
@@ -22,6 +25,7 @@ public class EnglishBot extends TelegramLongPollingBot {
         properties.load(inputStream);
         BOT_USERNAME = properties.getProperty("bot.name");
         BOT_TOKEN = properties.getProperty("bot.token");
+        userRepo = UserDAO.getInstance();
         LOG.info("Username and token entered");
     }
 
