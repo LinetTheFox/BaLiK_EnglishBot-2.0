@@ -17,6 +17,15 @@ public class EnglishBot extends TelegramLongPollingBot {
     private final String BOT_TOKEN;
     private final UserDAO userRepo;
 
+    /**
+     * COMMANDS
+     **/
+    private static final String START = "/start";
+    public static final String START_GAME = "START GAME";
+    public static final String FINISH_GAME = "FINISH GAME";
+    public static final String SELECT_UNIT = "SELECT UNIT";
+    public static final String LIST = "WORD LIST";
+
 
     private static final Logger LOG = Logger.getLogger(EnglishBot.class);
 
@@ -46,16 +55,49 @@ public class EnglishBot extends TelegramLongPollingBot {
             userRepo.createUser(user);
         }
 
-        SendMessage message = new SendMessage() // Create a SendMessage object with mandatory fields
+        SendMessage message = new SendMessage()
                 .setChatId(update.getMessage().getChatId())
-                .setText(update.getMessage().getText() + " ," + user.getName());
+                .setParseMode("HTML");
+
+        processUpdate(update, message, user);
+
+        userRepo.updateUser(user);
+    }
+
+    private void processUpdate(Update update, SendMessage message, User user) {
+        final String request = update.getMessage().getText();
+
+        switch (request) {
+            case START:
+                if (user.getName() == null) {
+                    message.setText(String.format(Messages.START.getMessage(), "noname"));
+                } else {
+                    message.setText(String.format(Messages.START.getMessage(), user.getName()));
+                }
+                user.setUnit(0);
+                user.setCurrentQuestion(0);
+                user.setScore(0);
+                executeMessage(message);
+                break;
+            case SELECT_UNIT:
+                break;
+            case START_GAME:
+                break;
+            case FINISH_GAME:
+                break;
+            case LIST:
+                break;
+            default:
+        }
+    }
+
+    private void executeMessage(SendMessage message) {
         try {
-            execute(message); // Call method to send the message
+            execute(message);
         } catch (TelegramApiException e) {
             e.printStackTrace();
+            LOG.error("Send message error!\n" + e.getMessage());
         }
-
-
     }
 
     @Override
@@ -67,4 +109,6 @@ public class EnglishBot extends TelegramLongPollingBot {
     public String getBotToken() {
         return BOT_TOKEN;
     }
+
+    //todo:ON CLOSING CONNECTION SHUT DOWN
 }

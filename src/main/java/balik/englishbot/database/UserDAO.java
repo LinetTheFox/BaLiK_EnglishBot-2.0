@@ -44,9 +44,6 @@ public class UserDAO {
         USERNAME = properties.getProperty("username");
         PASSWORD = properties.getProperty("password");
 
-        System.out.println(USERNAME);
-        System.out.println(PASSWORD);
-
         addMySQLToClassPath();
         createTable();
         LOG.info("Database info entered");
