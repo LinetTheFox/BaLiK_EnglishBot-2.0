@@ -1,5 +1,6 @@
 package balik.englishbot.database;
 
+import balik.englishbot.util.Translator;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
@@ -158,7 +159,7 @@ public class UserDAO {
 
     private int setUserData(int k, User user, PreparedStatement statement) throws SQLException {
         statement.setString(k++, user.getUsername());
-        statement.setNString(k++, user.getName());
+        statement.setString(k++, Translator.transliterate(user.getName()));
         statement.setInt(k++, user.getUnit());
         statement.setInt(k++, user.getCurrentQuestion());
         statement.setInt(k++, user.getScore());

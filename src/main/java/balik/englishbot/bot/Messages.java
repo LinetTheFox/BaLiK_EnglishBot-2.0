@@ -9,7 +9,16 @@ public enum Messages {
     TASK("<b>Translate</b>:\n%s"),
     CORRECT("Correct!\n\n"),
     WRONG(" Wrong!\nCorrect answer is <b>'%s'</b>\n\n"),
-    RANK("You translated correctly <b>%d of %d words</b>\nYour rank is:\n");
+    RANK("You translated correctly <b>%d of %d words</b>\nYour rank is:\n"),
+    /**
+     * RANKS
+     **/
+    RANK_A("Вас случайно не Валентин зовут?)))0)"),
+    RANK_B("О,сэр, да вы из Англии!"),
+    RANK_C("Not bad, потренируйся еще"),
+    RANK_D("Подучи и приходи еще"),
+    RANK_E("London is the capital of Great Britain"),
+    RANK_F("Брат, не на тот язык переводил:(");
 
     private final String message;
 
