@@ -11,8 +11,8 @@ import java.util.Properties;
 
 public class UserDAO {
     private final String DB_URL;
-    private final String USERNAME;
-    private final String PASSWORD;
+ /* private final String USERNAME;
+    private final String PASSWORD;*/
 
     private static Logger LOG = Logger.getLogger(UserDAO.class);
     private static UserDAO instance;
@@ -42,8 +42,8 @@ public class UserDAO {
         properties.load(inputStream);
 
         DB_URL = properties.getProperty("url");
-        USERNAME = properties.getProperty("username");
-        PASSWORD = properties.getProperty("password");
+//        USERNAME = properties.getProperty("username");
+//        PASSWORD = properties.getProperty("password");
 
         addMySQLToClassPath();
         createTable();
@@ -59,7 +59,7 @@ public class UserDAO {
     }
 
     private Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
+        return DriverManager.getConnection(DB_URL);
     }
 
     private void addMySQLToClassPath() {
