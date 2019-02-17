@@ -56,7 +56,7 @@ public class Dictionary {
         }
     }
 
-    public synchronized String getAnwer(String key) {
+    public synchronized String getAnswer(String key) {
         return words.get(key);
     }
 
@@ -64,4 +64,7 @@ public class Dictionary {
         return keys.get(index - 1);
     }
 
+    public Integer getSize() {
+        return keys.size();
+    }
 }

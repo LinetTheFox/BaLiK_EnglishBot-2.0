@@ -7,8 +7,9 @@ public enum Messages {
             "I hope I'll help you."),
     UNITE_CHOOSE("Choose the desired unit from the available"),
     TASK("<b>Translate</b>:\n%s"),
-    CORRECT("Correct!\n"),
-    WRONG(" Wrong!\nCorrect answer is <b>'%s'</b>\n");
+    CORRECT("Correct!\n\n"),
+    WRONG(" Wrong!\nCorrect answer is <b>'%s'</b>\n\n"),
+    RANK("You translated correctly <b>%d of %d words</b>\nYour rank is:\n");
 
     private final String message;
 

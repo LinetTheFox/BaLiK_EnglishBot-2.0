@@ -3,6 +3,7 @@ package balik.englishbot.bot;
 import balik.englishbot.database.User;
 import balik.englishbot.database.UserDAO;
 import balik.englishbot.dict.Dictionary;
+import balik.englishbot.rank.RankMaker;
 import org.apache.log4j.Logger;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -77,6 +78,8 @@ public class EnglishBot extends TelegramLongPollingBot {
         List<KeyboardRow> keyboard = new ArrayList<>();
         KeyboardRow keyboardRow;
 
+        Dictionary dictionary = Dictionary.getInstance();
+
         switch (request) {
             case START:
                 if (user.getName() == null) {
@@ -109,7 +112,7 @@ public class EnglishBot extends TelegramLongPollingBot {
                 user.setCurrentQuestion(user.getCurrentQuestion() + 1);
 
                 message.setText(String.format(Messages.TASK.getMessage(),
-                        Dictionary.getInstance().getKeyByIndex(user.getCurrentQuestion())));
+                        dictionary.getKeyByIndex(user.getCurrentQuestion())));
 
                 keyboardRow = new KeyboardRow();
                 keyboardRow.add(new KeyboardButton(FINISH_GAME));
@@ -120,7 +123,21 @@ public class EnglishBot extends TelegramLongPollingBot {
                 if (user.getCurrentQuestion() == 0) {
                     break;
                 }
-                //todo: finish game logic
+
+                String playerRank = RankMaker.determineRank(user.getScore(), user.getCurrentQuestion() - 1);
+                message.setText(playerRank);
+
+                user.setUnit(0);
+                user.setCurrentQuestion(0);
+                user.setScore(0);
+
+                keyboardRow = new KeyboardRow();
+                keyboardRow.add(new KeyboardButton(START_GAME));
+                keyboard.add(keyboardRow);
+
+                keyboardRow = new KeyboardRow();
+                keyboardRow.add(new KeyboardButton(LIST));
+                keyboard.add(keyboardRow);
 
                 break;
             case LIST:
@@ -128,7 +145,7 @@ public class EnglishBot extends TelegramLongPollingBot {
                     break;
                 }
 
-                message.setText(Dictionary.getInstance().getDictionaryAsString());
+                message.setText(dictionary.getDictionaryAsString());
 
                 keyboardRow = new KeyboardRow();
                 keyboardRow.add(new KeyboardButton(START_GAME));
@@ -137,17 +154,39 @@ public class EnglishBot extends TelegramLongPollingBot {
                 break;
             default:
                 if (user.getCurrentQuestion() != 0) {
-                    Dictionary dictionary = Dictionary.getInstance();
-                    String answer = dictionary.getAnwer(dictionary.getKeyByIndex(user.getCurrentQuestion()));
-                    if (answer.equals(request)) {
+                    String answer = dictionary.getAnswer(dictionary.getKeyByIndex(user.getCurrentQuestion()));
+                    if (answer.equals(request.toLowerCase())) {
                         message.setText(Messages.CORRECT.getMessage());
                         user.setScore(user.getScore() + 1);
                     } else {
                         message.setText(String.format(Messages.WRONG.getMessage(), answer));
                     }
+
                     user.setCurrentQuestion(user.getCurrentQuestion() + 1);
 
-                    //TODO: next TURN logic
+                    if (user.getCurrentQuestion() != dictionary.getSize()+1) {
+                        message.setText(message.getText() + String.format(Messages.TASK.getMessage(),
+                                dictionary.getKeyByIndex(user.getCurrentQuestion())));
+
+                        keyboardRow = new KeyboardRow();
+                        keyboardRow.add(new KeyboardButton(FINISH_GAME));
+                        keyboard.add(keyboardRow);
+                    } else {
+                        String rank = RankMaker.determineRank(user.getScore(), dictionary.getSize());
+                        message.setText(message.getText() + rank);
+
+                        user.setUnit(0);
+                        user.setCurrentQuestion(0);
+                        user.setScore(0);
+
+                        keyboardRow = new KeyboardRow();
+                        keyboardRow.add(new KeyboardButton(START_GAME));
+                        keyboard.add(keyboardRow);
+
+                        keyboardRow = new KeyboardRow();
+                        keyboardRow.add(new KeyboardButton(LIST));
+                        keyboard.add(keyboardRow);
+                    }
                 }
         }
 
