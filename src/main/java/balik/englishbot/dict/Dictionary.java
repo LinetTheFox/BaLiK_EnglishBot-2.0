@@ -6,6 +6,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -16,10 +17,11 @@ public class Dictionary {
     private final static String INPUT = "/vocabulary/dictionary.txt";
     private Map<String, String> words = new HashMap<>();
     private List<String> keys = new ArrayList<>();
-    private String dictionaryAsString = "";
+    private StringBuilder dictionaryAsString;
     private static Dictionary instance = null;
 
     private Dictionary() {
+        dictionaryAsString = new StringBuilder();
         createDictionary();
     }
 
@@ -32,19 +34,26 @@ public class Dictionary {
     }
 
     public synchronized String getDictionaryAsString() {
-        return dictionaryAsString;
+        return dictionaryAsString.toString();
     }
 
     private synchronized void createDictionary() {
         try (InputStream in = this.getClass().getResourceAsStream(INPUT);
-             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(in, "UTF-8"))) {
+             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8))) {
 
             String line = bufferedReader.readLine();
             int i = 1;
             while (line != null) {
                 String[] parseString = line.split("=");
-                //todo: replace with stringbuilder
-                dictionaryAsString += (i++) + ". " + parseString[0] + "—" + parseString[1] + "\n";
+
+                dictionaryAsString
+                        .append(i++)
+                        .append(". ")
+                        .append(parseString[0])
+                        .append("—")
+                        .append(parseString[1])
+                        .append("\n");
+
                 keys.add(parseString[1]);
                 words.put(parseString[1], parseString[0]);
                 line = bufferedReader.readLine();

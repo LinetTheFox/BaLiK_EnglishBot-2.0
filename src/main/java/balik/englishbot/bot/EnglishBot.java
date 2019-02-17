@@ -220,6 +220,4 @@ public class EnglishBot extends TelegramLongPollingBot {
     public String getBotToken() {
         return BOT_TOKEN;
     }
-
-    //todo:ON CLOSING CONNECTION SHUT DOWN
 }

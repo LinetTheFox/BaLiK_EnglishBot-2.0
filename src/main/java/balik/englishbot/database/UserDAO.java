@@ -158,7 +158,7 @@ public class UserDAO {
 
     private int setUserData(int k, User user, PreparedStatement statement) throws SQLException {
         statement.setString(k++, user.getUsername());
-        statement.setString(k++, user.getName());
+        statement.setNString(k++, user.getName());
         statement.setInt(k++, user.getUnit());
         statement.setInt(k++, user.getCurrentQuestion());
         statement.setInt(k++, user.getScore());
