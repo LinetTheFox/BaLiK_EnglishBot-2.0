@@ -3,4 +3,3 @@ out
 .idea
 target
 *.log
-**/*.properties
