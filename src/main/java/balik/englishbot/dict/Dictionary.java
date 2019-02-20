@@ -14,7 +14,7 @@ import java.util.Map;
 
 public class Dictionary {
     private static Logger LOG = Logger.getLogger(Dictionary.class);
-    private final static String INPUT = "/vocabulary/dictionary.txt";
+    private final static String INPUT = "/vocabulary/unit13Words.txt";
     private Map<String, String> words = new HashMap<>();
     private List<String> keys = new ArrayList<>();
     private StringBuilder dictionaryAsString;
