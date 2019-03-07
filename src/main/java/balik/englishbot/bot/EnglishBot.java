@@ -155,16 +155,19 @@ public class EnglishBot extends TelegramLongPollingBot {
             default:
                 if (user.getCurrentQuestion() != 0) {
                     String answer = dictionary.getAnswer(dictionary.getKeyByIndex(user.getCurrentQuestion()));
-                    if (answer.equals(request.toLowerCase())) {
+                    if (answer.replace('-', ' ').equals
+                            (request.toLowerCase().replace('-', ' '))) {
+
                         message.setText(Messages.CORRECT.getMessage());
                         user.setScore(user.getScore() + 1);
+                        
                     } else {
                         message.setText(String.format(Messages.WRONG.getMessage(), answer));
                     }
 
                     user.setCurrentQuestion(user.getCurrentQuestion() + 1);
 
-                    if (user.getCurrentQuestion() != dictionary.getSize()+1) {
+                    if (user.getCurrentQuestion() != dictionary.getSize() + 1) {
                         message.setText(message.getText() + String.format(Messages.TASK.getMessage(),
                                 dictionary.getKeyByIndex(user.getCurrentQuestion())));
 

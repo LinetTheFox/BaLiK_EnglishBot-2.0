@@ -4,8 +4,11 @@ import balik.englishbot.bot.Messages;
 
 public class RankMaker {
     public static String determineRank(int guess, int total) {
-        double percent = ((double) (guess * 100)) / total;
         String rank = String.format(Messages.RANK.getMessage(), guess, total);
+        if (total == 0) {
+            return rank + Messages.NO_RANK.getMessage();
+        }
+        double percent = ((double) (guess * 100)) / total;
         if (percent >= 95.0d) {
             rank += Messages.RANK_A.getMessage();
         } else if (percent >= 90.0d && percent < 95.0d) {

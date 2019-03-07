@@ -13,6 +13,7 @@ public enum Messages {
     /**
      * RANKS
      **/
+    NO_RANK("none"),
     RANK_A("Вас случайно не Валентин зовут?)))0)"),
     RANK_B("О,сэр, да вы из Англии!"),
     RANK_C("Not bad, потренируйся еще"),
