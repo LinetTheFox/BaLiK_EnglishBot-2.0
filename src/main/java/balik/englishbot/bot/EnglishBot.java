@@ -68,6 +68,8 @@ public class EnglishBot extends TelegramLongPollingBot {
     }
 
     private void processUpdate(Update update, User user) {
+        boolean advertising = false;
+
         SendMessage message = new SendMessage()
                 .setText("I don't understand you:(")
                 .setChatId(update.getMessage().getChatId())
@@ -124,6 +126,8 @@ public class EnglishBot extends TelegramLongPollingBot {
                     break;
                 }
 
+                advertising = true;
+
                 String playerRank = RankMaker.determineRank(user.getScore(), user.getCurrentQuestion() - 1);
                 message.setText(playerRank);
 
@@ -160,7 +164,7 @@ public class EnglishBot extends TelegramLongPollingBot {
 
                         message.setText(Messages.CORRECT.getMessage());
                         user.setScore(user.getScore() + 1);
-                        
+
                     } else {
                         message.setText(String.format(Messages.WRONG.getMessage(), answer));
                     }
@@ -175,6 +179,8 @@ public class EnglishBot extends TelegramLongPollingBot {
                         keyboardRow.add(new KeyboardButton(FINISH_GAME));
                         keyboard.add(keyboardRow);
                     } else {
+                        advertising = true;
+
                         String rank = RankMaker.determineRank(user.getScore(), dictionary.getSize());
                         message.setText(message.getText() + rank);
 
@@ -203,6 +209,14 @@ public class EnglishBot extends TelegramLongPollingBot {
         replyKeyboardMarkup.setKeyboard(keyboard);
 
         executeMessage(message);
+
+        if (advertising) {
+            SendMessage advertisingMessage = new SendMessage()
+                    .setText(Messages.SUBSCRIBE.getMessage())
+                    .setChatId(update.getMessage().getChatId())
+                    .setParseMode("HTML");
+            executeMessage(advertisingMessage);
+        }
     }
 
     private void executeMessage(SendMessage message) {

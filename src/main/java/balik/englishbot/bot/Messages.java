@@ -10,6 +10,8 @@ public enum Messages {
     CORRECT("Correct!\n\n"),
     WRONG(" Wrong!\nCorrect answer is <b>'%s'</b>\n\n"),
     RANK("You translated correctly <b>%d of %d words</b>\nYour rank is:\n"),
+    SUBSCRIBE("<b> to my blog where I try to describe my way of becoming a programmer.</b>\n" +
+            "https://t.me/balik_blog"),
     /**
      * RANKS
      **/
