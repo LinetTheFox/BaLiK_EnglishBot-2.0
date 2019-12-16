@@ -15,7 +15,7 @@ public class CommandHandler {
         commandMap = new HashMap<>();
 
         commandMap.put(Commands.START.getValue(), new StartCommand());
-        commandMap.put(Commands.HELP.getValue(), null);//todo:
+        commandMap.put(Commands.HELP.getValue(), new HelpCommand());
         commandMap.put(Commands.START_GAME.getValue(), new StartGameCommand());
         commandMap.put(Commands.FINISH_GAME.getValue(), new FinishGameCommand());
         commandMap.put(Commands.LIST.getValue(), new ListGameCommand());
