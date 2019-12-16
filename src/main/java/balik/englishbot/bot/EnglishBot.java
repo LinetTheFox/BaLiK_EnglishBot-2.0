@@ -1,9 +1,9 @@
 package balik.englishbot.bot;
 
 import balik.englishbot.bot.command.CommandHandler;
-import balik.englishbot.dao.UserDAO;
 import balik.englishbot.domain.User;
-import balik.englishbot.dao.impl.UserDAOImpl;
+import balik.englishbot.service.UserService;
+import balik.englishbot.service.impl.UserServiceImpl;
 import org.apache.log4j.Logger;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -16,11 +16,10 @@ import java.util.Objects;
 import java.util.Properties;
 
 
-//todo: service layer
 public class EnglishBot extends TelegramLongPollingBot {
     private final String BOT_USERNAME;
     private final String BOT_TOKEN;
-    private final UserDAO userRepo;
+    private final UserService userService;
 
     private static final Logger LOG = Logger.getLogger(EnglishBot.class);
 
@@ -30,7 +29,7 @@ public class EnglishBot extends TelegramLongPollingBot {
         properties.load(Objects.requireNonNull(inputStream));
         BOT_USERNAME = properties.getProperty("bot.name");
         BOT_TOKEN = properties.getProperty("bot.token");
-        userRepo = UserDAOImpl.getInstance();
+        userService = new UserServiceImpl();
         LOG.info("Username and token entered");
     }
 
@@ -40,24 +39,23 @@ public class EnglishBot extends TelegramLongPollingBot {
             return;
         }
 
-        User user = userRepo.getUser(update.getMessage().getChatId());
+        User user = userService.getUser(update.getMessage().getChatId());
 
         if (user == null) {
-            user = new User(update.getMessage().getChatId());
-            user.setUsername(update.getMessage().getFrom().getUserName());
-            user.setName(update.getMessage().getFrom().getFirstName());
+            user = userService.createUser(update.getMessage().getChatId(),
+                    update.getMessage().getFrom().getUserName(),
+                    update.getMessage().getFrom().getFirstName());
             LOG.info("Adding new user with chatId: " + user.getChatId());
-            userRepo.createUser(user);
         }
 
         processUpdate(update, user);
 
-        userRepo.updateUser(user);
+        userService.updateUser(user);
     }
 
     private void processUpdate(Update update, User user) {
         final String request = update.getMessage().getText();
-        SendMessage message = CommandHandler.getInstance().getCommand(request).handleMessage(update,user);
+        SendMessage message = CommandHandler.getInstance().getCommand(request).handleMessage(update, user);
         executeMessage(message);
     }
 
