@@ -1,4 +1,4 @@
-package balik.englishbot.database;
+package balik.englishbot.domain;
 
 public class User {
     private long chatId;

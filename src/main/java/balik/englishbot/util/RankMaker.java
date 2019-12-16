@@ -1,8 +1,8 @@
-package balik.englishbot.rank;
+package balik.englishbot.util;
 
 import balik.englishbot.bot.Messages;
 
-public class RankMaker {
+public final class RankMaker {
     public static String determineRank(int guess, int total) {
         String rank = String.format(Messages.RANK.getMessage(), guess, total);
         if (total == 0) {

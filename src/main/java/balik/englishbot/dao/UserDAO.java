@@ -1,5 +1,6 @@
-package balik.englishbot.database;
+package balik.englishbot.dao;
 
+import balik.englishbot.domain.User;
 import balik.englishbot.util.Translator;
 import org.apache.log4j.Logger;
 

@@ -1,6 +1,7 @@
 package balik.englishbot.rank;
 
 import balik.englishbot.bot.Messages;
+import balik.englishbot.util.RankMaker;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

@@ -1,4 +1,4 @@
-package balik.englishbot.dict;
+package balik.englishbot.util;
 
 import org.apache.log4j.Logger;
 
@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Dictionary {
+public final class Dictionary {
     private static Logger LOG = Logger.getLogger(Dictionary.class);
     private final static String INPUT = "/vocabulary/unit13Words.txt";
     private Map<String, String> words = new HashMap<>();
