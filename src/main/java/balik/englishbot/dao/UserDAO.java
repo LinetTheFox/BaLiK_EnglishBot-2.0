@@ -9,6 +9,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.Properties;
 
+//todo: interface and better package
 public class UserDAO {
     private final String DB_URL;
  /* private final String USERNAME;
