@@ -1,4 +1,4 @@
-package balik.englishbot.bot.command;
+package balik.englishbot.handler;
 
 import balik.englishbot.domain.User;
 import balik.englishbot.util.Dictionary;

@@ -1,6 +1,6 @@
 package balik.englishbot.bot;
 
-import balik.englishbot.bot.command.CommandHandler;
+import balik.englishbot.handler.CommandHandler;
 import balik.englishbot.domain.User;
 import balik.englishbot.service.UserService;
 import balik.englishbot.service.impl.UserServiceImpl;
@@ -39,13 +39,13 @@ public class EnglishBot extends TelegramLongPollingBot {
             return;
         }
 
-        User user = userService.getUser(update.getMessage().getChatId());
+        User user = userService.getUser(update.getMessage().getFrom().getId());
 
         if (user == null) {
-            user = userService.createUser(update.getMessage().getChatId(),
+            user = userService.createUser(update.getMessage().getFrom().getId(),
                     update.getMessage().getFrom().getUserName(),
                     update.getMessage().getFrom().getFirstName());
-            LOG.info("Adding new user with chatId: " + user.getChatId());
+            LOG.info("Adding new user with chatId: " + user.getId());
         }
 
         processUpdate(update, user);

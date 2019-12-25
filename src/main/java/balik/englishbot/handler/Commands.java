@@ -1,4 +1,4 @@
-package balik.englishbot.bot.command;
+package balik.englishbot.handler;
 
 public enum Commands {
     START("/start"),

@@ -1,27 +1,27 @@
 package balik.englishbot.domain;
 
 public class User {
-    private long chatId;
+    private long id;
     private String username;
     private String name;
     private int unit;
     private int currentQuestion;
     private int score;
 
-    public User(long chatId) {
-        this.chatId = chatId;
+    public User(long id) {
+        this.id = id;
     }
 
-    public User(String chatId) {
-        this.chatId = Long.parseLong(chatId);
+    public User(String id) {
+        this.id = Long.parseLong(id);
     }
 
-    public long getChatId() {
-        return chatId;
+    public long getId() {
+        return id;
     }
 
-    public void setChatId(long chatId) {
-        this.chatId = chatId;
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getUsername() {

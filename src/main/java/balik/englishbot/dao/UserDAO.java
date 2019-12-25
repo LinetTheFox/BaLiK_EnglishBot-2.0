@@ -5,7 +5,7 @@ import balik.englishbot.domain.User;
 import java.util.ArrayList;
 
 public interface UserDAO {
-    User getUser(long chatId);
+    User getUser(long id);
 
     ArrayList<User> getAllUsers();
 

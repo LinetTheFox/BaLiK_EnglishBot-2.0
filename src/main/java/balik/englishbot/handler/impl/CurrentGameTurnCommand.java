@@ -1,8 +1,8 @@
-package balik.englishbot.bot.command.impl;
+package balik.englishbot.handler.impl;
 
 import balik.englishbot.bot.Messages;
-import balik.englishbot.bot.command.AbstractCommand;
-import balik.englishbot.bot.command.Commands;
+import balik.englishbot.handler.AbstractCommand;
+import balik.englishbot.handler.Commands;
 import balik.englishbot.domain.User;
 import balik.englishbot.util.RankMaker;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;

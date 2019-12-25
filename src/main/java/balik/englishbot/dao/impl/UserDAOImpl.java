@@ -85,13 +85,13 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public User getUser(long chatId) {
+    public User getUser(long id) {
         PreparedStatement statement;
         ResultSet rs;
 
         try (Connection con = getConnection()) {
             statement = con.prepareStatement(GET_USER_BY_CHAT_ID);
-            statement.setString(1, String.valueOf(chatId));
+            statement.setString(1, String.valueOf(id));
 
             rs = statement.executeQuery();
 
@@ -152,7 +152,7 @@ public class UserDAOImpl implements UserDAO {
             statement = con.prepareStatement(UPDATE_USER);
             int k = 1;
             k = setUserData(k, user, statement);
-            statement.setString(k, String.valueOf(user.getChatId()));
+            statement.setString(k, String.valueOf(user.getId()));
 
             int rs = statement.executeUpdate();
             LOG.info("User update result: " + rs);
@@ -176,7 +176,7 @@ public class UserDAOImpl implements UserDAO {
     public void createUser(User user) {
         PreparedStatement statement;
 
-        if (getUser(user.getChatId()) != null) {
+        if (getUser(user.getId()) != null) {
             updateUser(user);
             return;
         }
@@ -186,7 +186,7 @@ public class UserDAOImpl implements UserDAO {
 
             statement = con.prepareStatement(CREATE_USER);
             int k = 1;
-            statement.setString(k++, String.valueOf(user.getChatId()));
+            statement.setString(k++, String.valueOf(user.getId()));
             setUserData(k, user, statement);
 
             int rs = statement.executeUpdate();
