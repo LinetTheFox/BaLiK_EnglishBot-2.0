@@ -15,13 +15,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUser(long chatId) {
-        return userDAO.getUser(chatId);
+    public User getUser(long id) {
+        return userDAO.getUser(id);
     }
 
     @Override
-    public User createUser(long chatId, String username, String firstName) {
-        User user = new User(chatId);
+    public User createUser(long id, String username, String firstName) {
+        User user = new User(id);
         user.setUsername(username);
         user.setName(firstName);
 
