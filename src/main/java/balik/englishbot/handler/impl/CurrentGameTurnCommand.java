@@ -1,8 +1,8 @@
 package balik.englishbot.handler.impl;
 
-import balik.englishbot.bot.Messages;
+import balik.englishbot.bot.BotMessages;
 import balik.englishbot.handler.AbstractCommand;
-import balik.englishbot.handler.Commands;
+import balik.englishbot.bot.BotCommands;
 import balik.englishbot.domain.User;
 import balik.englishbot.util.RankMaker;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -21,21 +21,21 @@ public class CurrentGameTurnCommand extends AbstractCommand {
             if (answer.replace('-', ' ').equals
                     (request.toLowerCase().replace('-', ' '))) {
 
-                message.setText(Messages.CORRECT.getMessage());
+                message.setText(BotMessages.CORRECT.getMessage());
                 user.setScore(user.getScore() + 1);
 
             } else {
-                message.setText(String.format(Messages.WRONG.getMessage(), answer));
+                message.setText(String.format(BotMessages.WRONG.getMessage(), answer));
             }
 
             user.setCurrentQuestion(user.getCurrentQuestion() + 1);
 
             if (user.getCurrentQuestion() != dictionary.getSize() + 1) {
-                message.setText(message.getText() + String.format(Messages.TASK.getMessage(),
+                message.setText(message.getText() + String.format(BotMessages.TASK.getMessage(),
                         dictionary.getKeyByIndex(user.getCurrentQuestion())));
 
                 keyboardRow = new KeyboardRow();
-                keyboardRow.add(new KeyboardButton(Commands.FINISH_GAME.getValue()));
+                keyboardRow.add(new KeyboardButton(BotCommands.FINISH_GAME.getValue()));
                 keyboard.add(keyboardRow);
             } else {
                 String rank = RankMaker.determineRank(user.getScore(), dictionary.getSize());

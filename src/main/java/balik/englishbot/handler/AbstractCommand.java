@@ -1,5 +1,6 @@
 package balik.englishbot.handler;
 
+import balik.englishbot.bot.BotCommands;
 import balik.englishbot.domain.User;
 import balik.englishbot.util.Dictionary;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -54,11 +55,11 @@ public abstract class AbstractCommand {
         user.setScore(0);
 
         keyboardRow = new KeyboardRow();
-        keyboardRow.add(new KeyboardButton(Commands.START_GAME.getValue()));
+        keyboardRow.add(new KeyboardButton(BotCommands.START_GAME.getValue()));
         keyboard.add(keyboardRow);
 
         keyboardRow = new KeyboardRow();
-        keyboardRow.add(new KeyboardButton(Commands.LIST.getValue()));
+        keyboardRow.add(new KeyboardButton(BotCommands.LIST.getValue()));
         keyboard.add(keyboardRow);
     }
 }

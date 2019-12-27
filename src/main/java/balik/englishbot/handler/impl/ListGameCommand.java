@@ -1,7 +1,7 @@
 package balik.englishbot.handler.impl;
 
 import balik.englishbot.handler.AbstractCommand;
-import balik.englishbot.handler.Commands;
+import balik.englishbot.bot.BotCommands;
 import balik.englishbot.domain.User;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
@@ -19,7 +19,7 @@ public class ListGameCommand extends AbstractCommand {
         message.setText(dictionary.getDictionaryAsString());
 
         keyboardRow = new KeyboardRow();
-        keyboardRow.add(new KeyboardButton(Commands.START_GAME.getValue()));
+        keyboardRow.add(new KeyboardButton(BotCommands.START_GAME.getValue()));
         keyboard.add(keyboardRow);
     }
 }

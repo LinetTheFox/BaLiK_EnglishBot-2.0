@@ -1,6 +1,6 @@
-package balik.englishbot.handler;
+package balik.englishbot.bot;
 
-public enum Commands {
+public enum BotCommands {
     START("/start"),
     HELP("HELP"),
     START_GAME("START GAME"),
@@ -9,7 +9,7 @@ public enum Commands {
 
     private final String command;
 
-    Commands(String message) {
+    BotCommands(String message) {
         this.command = message;
     }
 

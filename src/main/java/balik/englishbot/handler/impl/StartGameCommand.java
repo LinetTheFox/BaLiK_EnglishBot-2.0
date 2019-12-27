@@ -1,8 +1,8 @@
 package balik.englishbot.handler.impl;
 
-import balik.englishbot.bot.Messages;
+import balik.englishbot.bot.BotMessages;
 import balik.englishbot.handler.AbstractCommand;
-import balik.englishbot.handler.Commands;
+import balik.englishbot.bot.BotCommands;
 import balik.englishbot.domain.User;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
@@ -19,11 +19,11 @@ public class StartGameCommand extends AbstractCommand {
 
         user.setCurrentQuestion(1);
 
-        message.setText(String.format(Messages.TASK.getMessage(),
+        message.setText(String.format(BotMessages.TASK.getMessage(),
                 dictionary.getKeyByIndex(user.getCurrentQuestion())));
 
         keyboardRow = new KeyboardRow();
-        keyboardRow.add(new KeyboardButton(Commands.FINISH_GAME.getValue()));
+        keyboardRow.add(new KeyboardButton(BotCommands.FINISH_GAME.getValue()));
         keyboard.add(keyboardRow);
     }
 }

@@ -1,6 +1,6 @@
 package balik.englishbot.bot;
 
-public enum Messages {
+public enum BotMessages {
     START("Hello, <b>%s!</b>\n" +
             "This bot is aimed at helping to memorize words for dictation-translation.\n" +
             "Do not judge strictly,it is on crutches and I am a monkey coder;)\n" +
@@ -25,7 +25,7 @@ public enum Messages {
 
     private final String message;
 
-    Messages(String message) {
+    BotMessages(String message) {
         this.message = message;
     }
 

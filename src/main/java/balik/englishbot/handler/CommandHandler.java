@@ -1,5 +1,6 @@
 package balik.englishbot.handler;
 
+import balik.englishbot.bot.BotCommands;
 import balik.englishbot.handler.impl.*;
 import org.apache.log4j.Logger;
 
@@ -14,11 +15,11 @@ public final class CommandHandler {
     private CommandHandler() {
         commandMap = new HashMap<>();
 
-        commandMap.put(Commands.START.getValue(), new StartCommand());
-        commandMap.put(Commands.HELP.getValue(), new HelpCommand());
-        commandMap.put(Commands.START_GAME.getValue(), new StartGameCommand());
-        commandMap.put(Commands.FINISH_GAME.getValue(), new FinishGameCommand());
-        commandMap.put(Commands.LIST.getValue(), new ListGameCommand());
+        commandMap.put(BotCommands.START.getValue(), new StartCommand());
+        commandMap.put(BotCommands.HELP.getValue(), new HelpCommand());
+        commandMap.put(BotCommands.START_GAME.getValue(), new StartGameCommand());
+        commandMap.put(BotCommands.FINISH_GAME.getValue(), new FinishGameCommand());
+        commandMap.put(BotCommands.LIST.getValue(), new ListGameCommand());
         commandMap.put("default", new CurrentGameTurnCommand());
     }
 
