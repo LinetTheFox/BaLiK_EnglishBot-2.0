@@ -4,6 +4,7 @@ import balik.englishbot.dao.UserDAO;
 import balik.englishbot.dao.impl.UserDAOImpl;
 import balik.englishbot.domain.User;
 import balik.englishbot.service.UserService;
+import org.telegram.telegrambots.meta.api.objects.Update;
 
 import java.io.IOException;
 
@@ -15,17 +16,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUser(long id) {
-        return userDAO.getUser(id);
-    }
+    public User getUser(Update update) {
+        final Integer userId = update.getMessage().getFrom().getId();
+        User user = userDAO.getUser(userId);
 
-    @Override
-    public User createUser(long id, String username, String firstName) {
-        User user = new User(id);
-        user.setUsername(username);
-        user.setName(firstName);
+        if (user == null) {
+            user = new User(userId);
+            user.setUsername(update.getMessage().getFrom().getUserName());
+            user.setName(update.getMessage().getFrom().getFirstName());
 
-        userDAO.createUser(user);
+            userDAO.createUser(user);
+        }
 
         return user;
     }

@@ -39,14 +39,7 @@ public class EnglishBot extends TelegramLongPollingBot {
             return;
         }
 
-        User user = userService.getUser(update.getMessage().getFrom().getId());
-
-        if (user == null) {
-            user = userService.createUser(update.getMessage().getFrom().getId(),
-                    update.getMessage().getFrom().getUserName(),
-                    update.getMessage().getFrom().getFirstName());
-            LOG.info("Adding new user with chatId: " + user.getId());
-        }
+        User user = userService.getUser(update);
 
         processUpdate(update, user);
 
