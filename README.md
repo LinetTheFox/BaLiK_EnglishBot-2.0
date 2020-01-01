@@ -44,5 +44,5 @@ Bot commands
     </tr>
 </table>
 
-![https://www.dropbox.com/s/92coyr12e7as3j0/1.png?dl=0]()
-![https://www.dropbox.com/s/92coyr12e7as3j0/1.png?dl=0]()
+![](https://github.com/BaLiKfromUA/BaLiK_EnglishBot-2.0/blob/master/files/2.png?raw=true)
+![](https://github.com/BaLiKfromUA/BaLiK_EnglishBot-2.0/blob/master/files/2.png?raw=true)
