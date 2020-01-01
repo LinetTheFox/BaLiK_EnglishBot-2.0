@@ -1,7 +1,7 @@
-Balik_EnglishBot-2.0
+:robot: Balik_EnglishBot-2.0
 ====================
 
-A Telegram Bot used to practice English lexics learning.
+A Telegram Bot used to practice English vocabulary learning.
 
 
 [![https://t.me/BaLiK_EnglishBot](https://img.shields.io/badge/💬_Telegram_Bot-BaLiK__EnglishBot-blue.svg)](https://t.me/BaLiK_EnglishBot)
@@ -11,7 +11,7 @@ A Telegram Bot used to practice English lexics learning.
 What is it?
 -----------
 
-This bot allows people learning English to train themselves in learning English words and prepare for the tests on lexics. It is performed in a manner similar to the real test - when this "game" goes on the bot keeps track of how many words were given and how many of them were translated correctly. This information is given to the user after training.
+This bot allows people learning English to train themselves in learning English words and prepare for the tests on vocabulary. It is performed in a manner similar to the real test - when this "game" goes on the bot keeps track of how many words were given and how many of them were translated correctly. This information is given to the user after training.
 
 
 Bot commands
