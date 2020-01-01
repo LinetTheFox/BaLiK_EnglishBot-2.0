@@ -1,4 +1,5 @@
-#Balik_EnglishBot-2.0
+Balik_EnglishBot-2.0
+====================
 
 A Telegram Bot used to practise English lexics learning.
 
@@ -7,11 +8,14 @@ A Telegram Bot used to practise English lexics learning.
 [![https://t.me/BaLik_mem](https://img.shields.io/badge/💬_Telegram-BaLiK__mem-blue.svg)](https://t.me/BaLiK_mem)
 [![https://github.com/BaLiKfromUA](https://img.shields.io/badge/Github-BaLiKfromUA-blue.svg)](https://github.com/BaLikfromUA)
 
-##What is it?
+What is it?
+-----------
+
 This bot allows people learning English train themselves in learning English words and prepare for the tests on lexics. It is performed in a manner similar to real test - when this "game" goes on the bot keeps track of how many words were given and how many of them were translated correctly. This information is given to the user after training.
 
 
-##Bot commands
+Bot commands
+------------
 
 <table>
     <tr>
@@ -40,5 +44,5 @@ This bot allows people learning English train themselves in learning English wor
     </tr>
 </table>
 
-![](https://www.dropbox.com/s/92coyr12e7as3j0/1.png?dl=0)
-![](https://www.dropbox.com/s/rwchopm27ahl3z5/2.png?dl=0)
+![https://www.dropbox.com/s/92coyr12e7as3j0/1.png?dl=0]()
+![https://www.dropbox.com/s/92coyr12e7as3j0/1.png?dl=0]()
