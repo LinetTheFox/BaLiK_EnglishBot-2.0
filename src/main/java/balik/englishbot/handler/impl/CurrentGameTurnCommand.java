@@ -19,7 +19,7 @@ public class CurrentGameTurnCommand extends AbstractCommand {
             final String request = update.getMessage().getText();
             String answer = dictionary.getAnswer(dictionary.getKeyByIndex(user.getCurrentQuestion()));
 
-            int hammingDistance = hammingDistance(answer, request);
+            int hammingDistance = hammingDistance(answer.toLowerCase(), request.toLowerCase());
             if (hammingDistance == 0)  {
                 message.setText(BotMessages.CORRECT.getMessage());
                 user.setScore(user.getScore() + 1);

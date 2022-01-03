@@ -15,7 +15,7 @@ public class Starter {
     private static final Logger LOG = LogManager.getLogger(Starter.class);
 
     public static void main(String[] args) {
-        Locale.setDefault(new Locale("en"));
+        Locale.setDefault(new Locale("hu"));
         try {
             TelegramBotsApi botsApi = new TelegramBotsApi(DefaultBotSession.class);
             botsApi.registerBot(new EnglishBot());
