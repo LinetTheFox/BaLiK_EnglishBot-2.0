@@ -3,16 +3,18 @@ package balik.englishbot.dao.impl;
 import balik.englishbot.dao.UserDAO;
 import balik.englishbot.domain.User;
 import balik.englishbot.util.Translator;
-import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 public class UserDAOImpl implements UserDAO {
     private final String DB_URL;
 
-    private static Logger LOG = Logger.getLogger(UserDAOImpl.class);
+    private static Logger LOG = LogManager.getLogger(UserDAOImpl.class);
     private static UserDAOImpl instance;
 
     /**

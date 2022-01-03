@@ -2,13 +2,15 @@ package balik.englishbot.handler;
 
 import balik.englishbot.bot.BotCommands;
 import balik.englishbot.handler.impl.*;
-import org.apache.log4j.Logger;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 public final class CommandHandler {
-    private static Logger LOG = Logger.getLogger(CommandHandler.class);
+    private static Logger LOG = LogManager.getLogger(CommandHandler.class);
     private static CommandHandler instance = null;
     private Map<String, AbstractCommand> commandMap;
 

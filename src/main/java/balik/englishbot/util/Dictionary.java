@@ -1,6 +1,6 @@
 package balik.englishbot.util;
 
-import org.apache.log4j.Logger;
+// import org.apache.log4j.Logger;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -12,8 +12,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 public final class Dictionary {
-    private static Logger LOG = Logger.getLogger(Dictionary.class);
+    private static Logger LOG = LogManager.getLogger(Dictionary.class);
     private final static String INPUT = "/vocabulary/unit13Words.txt";
     private Map<String, String> words = new HashMap<>();
     private List<String> keys = new ArrayList<>();

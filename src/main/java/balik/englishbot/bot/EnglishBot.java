@@ -4,7 +4,9 @@ import balik.englishbot.handler.CommandHandler;
 import balik.englishbot.domain.User;
 import balik.englishbot.service.UserService;
 import balik.englishbot.service.impl.UserServiceImpl;
-import org.apache.log4j.Logger;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
@@ -17,7 +19,7 @@ public class EnglishBot extends TelegramLongPollingBot {
     private final String BOT_TOKEN;
     private final UserService userService;
 
-    private static final Logger LOG = Logger.getLogger(EnglishBot.class);
+    private static final Logger LOG = LogManager.getLogger(EnglishBot.class);
 
     public EnglishBot() throws IOException {
         BOT_USERNAME = System.getenv("bot_username");
