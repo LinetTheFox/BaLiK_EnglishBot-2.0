@@ -11,10 +11,6 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.Objects;
-import java.util.Properties;
-
 
 public class EnglishBot extends TelegramLongPollingBot {
     private final String BOT_USERNAME;
@@ -24,11 +20,8 @@ public class EnglishBot extends TelegramLongPollingBot {
     private static final Logger LOG = Logger.getLogger(EnglishBot.class);
 
     public EnglishBot() throws IOException {
-        InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream("bot.properties");
-        Properties properties = new Properties();
-        properties.load(Objects.requireNonNull(inputStream));
-        BOT_USERNAME = properties.getProperty("bot.name");
-        BOT_TOKEN = properties.getProperty("bot.token");
+        BOT_USERNAME = System.getenv("bot_username");
+        BOT_TOKEN = System.getenv("bot_token");
         userService = new UserServiceImpl();
         LOG.info("Username and token entered");
     }

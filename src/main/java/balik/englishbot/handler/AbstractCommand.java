@@ -24,10 +24,11 @@ public abstract class AbstractCommand {
     protected SendMessage createNewMessage(Update update) {
         keyboard = new ArrayList<>();
 
-        return new SendMessage()
-                .setText("I don't understand you:(")
-                .setParseMode("HTML")
-                .setChatId(update.getMessage().getChatId());
+        return SendMessage.builder()
+            .text("I don't understand you :(")
+            .parseMode("HTML")
+            .chatId(update.getMessage().getChatId().toString())
+            .build();
     }
 
     protected void setKeyboard(SendMessage message) {

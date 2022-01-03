@@ -17,7 +17,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUser(Update update) {
-        final Integer userId = update.getMessage().getFrom().getId();
+        final Long userId = update.getMessage().getFrom().getId();
         User user = userDAO.getUser(userId);
 
         if (user == null) {

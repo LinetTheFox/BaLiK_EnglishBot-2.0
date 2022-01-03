@@ -3,3 +3,6 @@ out
 .idea
 target
 *.log
+
+.vscode
+.env

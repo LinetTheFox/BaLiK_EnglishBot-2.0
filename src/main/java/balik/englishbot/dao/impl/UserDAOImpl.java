@@ -6,21 +6,17 @@ import balik.englishbot.util.Translator;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Properties;
 
 public class UserDAOImpl implements UserDAO {
     private final String DB_URL;
- /* private final String USERNAME;
-    private final String PASSWORD;*/
 
     private static Logger LOG = Logger.getLogger(UserDAOImpl.class);
     private static UserDAOImpl instance;
 
     /**
-     * QUERIES
+     * Query for creating the user table in case it doesn't exist yet
      **/
     private static final String CREATE_TABLE = "CREATE TABLE IF NOT EXISTS users (" +
             "id BIGINT NOT NULL, " +
@@ -31,21 +27,32 @@ public class UserDAOImpl implements UserDAO {
             "score INT, " +
             "PRIMARY KEY (id) " +
             ")";
+
+    /**
+     * Query for creating user
+     **/
     private static final String CREATE_USER = "INSERT INTO users (id, username, firstname, unit, current_question, score)" +
             " VALUES (?,?,?,?,?,?)";
+
+    /**
+     * Query for updating existing user
+     **/
     private static final String UPDATE_USER = "UPDATE users SET username=?, firstname=?, unit=?, current_question=?, score=?" +
             " WHERE id=?";
+
+    /**
+     * Query for getting the user by Telegram chat id
+     **/
     private static final String GET_USER_BY_CHAT_ID = "SELECT * FROM users WHERE id = ?";
+
+    /**
+     * Query for getting all users
+     **/
     private static final String GET_ALL_USERS = "SELECT * FROM users";
 
     private UserDAOImpl() throws IOException {
-        InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream("database.properties");
-        Properties properties = new Properties();
-        properties.load(inputStream);
 
-        DB_URL = properties.getProperty("url");
-//        USERNAME = properties.getProperty("username");
-//        PASSWORD = properties.getProperty("password");
+        DB_URL = System.getenv("db_url");
 
         addMySQLToClassPath();
         createTable();
@@ -66,7 +73,7 @@ public class UserDAOImpl implements UserDAO {
 
     private void addMySQLToClassPath() {
         try {
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
             LOG.error("Add MySQL error!");

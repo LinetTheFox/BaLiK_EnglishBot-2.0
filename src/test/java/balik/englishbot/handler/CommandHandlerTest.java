@@ -14,9 +14,9 @@ public class CommandHandlerTest {
             "Do not judge strictly,it is on crutches and I am a monkey coder;)\n" +
             "I hope I'll help you.";
 
-    @Test
-    public void testStartMessage() {
-        SendMessage message = COMMAND_HANDLER.getCommand(START_COMMAND).handleMessage(new Update(), null);
-        assertEquals(START_MESSAGE, message.getText());
-    }
+    // @Test
+    // public void testStartMessage() {
+    //     SendMessage message = COMMAND_HANDLER.getCommand(START_COMMAND).handleMessage(new Update(), null);
+    //     assertEquals(START_MESSAGE, message.getText());
+    // }
 }
