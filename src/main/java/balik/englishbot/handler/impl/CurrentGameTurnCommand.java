@@ -18,12 +18,14 @@ public class CurrentGameTurnCommand extends AbstractCommand {
 
             final String request = update.getMessage().getText();
             String answer = dictionary.getAnswer(dictionary.getKeyByIndex(user.getCurrentQuestion()));
-            if (answer.replace('-', ' ').equals
-                    (request.toLowerCase().replace('-', ' '))) {
 
+            int hammingDistance = hammingDistance(answer, request);
+            if (hammingDistance == 0)  {
                 message.setText(BotMessages.CORRECT.getMessage());
                 user.setScore(user.getScore() + 1);
-
+            } else if (hammingDistance < 3) {
+                message.setText(BotMessages.TYPO.getMessage() + answer);
+                user.setScore(user.getScore() + 1);
             } else {
                 message.setText(String.format(BotMessages.WRONG.getMessage(), answer));
             }
@@ -45,4 +47,20 @@ public class CurrentGameTurnCommand extends AbstractCommand {
             }
         }
     }
+
+    private int hammingDistance(String correct, String answer) {
+        int distance = 0;
+
+        // Counts different chars at the same positions in both strings.
+        for (int i = 0; i < Math.min(correct.length(), answer.length()); ++i) {
+            if (correct.charAt(i) != answer.charAt(i)) {
+                distance++;
+            }
+        }
+        // If strings have different length, adds to the distance the difference
+        distance += Math.abs(correct.length() - answer.length());
+
+        return distance;
+    }
+
 }
