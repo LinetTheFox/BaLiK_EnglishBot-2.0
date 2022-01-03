@@ -17,7 +17,7 @@ import org.apache.logging.log4j.Logger;
 
 public final class Dictionary {
     private static Logger LOG = LogManager.getLogger(Dictionary.class);
-    private final static String INPUT = "/vocabulary/unit13Words.txt";
+    private final static String INPUT = "/vocabulary/hun.txt";
     private Map<String, String> words = new HashMap<>();
     private List<String> keys = new ArrayList<>();
     private StringBuilder dictionaryAsString;
