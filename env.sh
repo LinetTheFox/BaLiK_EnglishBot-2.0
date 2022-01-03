@@ -4,6 +4,3 @@ if [[ -e .env ]]; then
         export $line
     done 
 fi
-
-# Running worker
-sh target/bin/workerBot
